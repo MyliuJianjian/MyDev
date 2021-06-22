@@ -46,7 +46,7 @@ public abstract class BaseEntity {
     public Integer modifyOrgId;
 
     @Column(name = "deleted_flag",columnDefinition = "int COMMENT '逻辑删除 0-未删除 1-已删除'")
-    public Integer deleted_flag;
+    public Integer deletedFlag;
 
     @Version
     @Column(name = "version_flag",columnDefinition = "int  COMMENT '版本号'")
@@ -101,12 +101,12 @@ public abstract class BaseEntity {
         this.modifyOrgId = modifyOrgId;
     }
 
-    public Integer getDeleted_flag() {
-        return deleted_flag;
+    public Integer getDeletedFlag() {
+        return deletedFlag;
     }
 
-    public void setDeleted_flag(Integer deleted_flag) {
-        this.deleted_flag = deleted_flag;
+    public void setDeletedFlag(Integer deletedFlag) {
+        this.deletedFlag = deletedFlag;
     }
 
     public Integer getVersionFlag() {
