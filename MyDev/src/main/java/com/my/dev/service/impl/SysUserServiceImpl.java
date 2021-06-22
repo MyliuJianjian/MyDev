@@ -1,6 +1,7 @@
 package com.my.dev.service.impl;
 
 import com.my.common.ConstantsUtils;
+import com.my.common.CopyUtils;
 import com.my.dev.JpaRepository.SysUserRepository;
 import com.my.dev.entity.userinfo.SysUserEntity;
 import com.my.dev.service.ISysUserService;
@@ -22,6 +23,8 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     public SysUserEntity saveUserInfo(SysUserEntity user){
-        return sysUserRepository.save(user);
+        SysUserEntity oldUser=findUserInfo(user.getUserId());
+        CopyUtils.copySelective(user,oldUser);
+        return sysUserRepository.save(oldUser);
     }
 }
