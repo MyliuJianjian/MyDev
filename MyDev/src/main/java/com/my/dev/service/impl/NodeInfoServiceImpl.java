@@ -15,6 +15,7 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 功能描述
@@ -36,12 +37,13 @@ public class NodeInfoServiceImpl implements INodeInfoService {
         }
         NodeInfoEntity node=new NodeInfoEntity();
         CopyUtils.copyProperties(vo,node);
-        NodeInfoEntity parent=nodeInfoRepository.getById(vo.getNodeParent());
-        if(null==parent){
+        Optional<NodeInfoEntity> parent=nodeInfoRepository.findById(vo.getNodeParent());
+        if(parent.isPresent()){
+            node.setNodeLevel(parent.get().getNodeLevel()+1);
+
+        }else{
             node.setNodeParent(0);
             node.setNodeLevel(1);
-        }else{
-            node.setNodeLevel(parent.getNodeLevel()+1);
         }
         node=nodeInfoRepository.save(node);
         NodeTextEntity text=new NodeTextEntity();
