@@ -14,6 +14,8 @@ import java.util.Base64;
  * @date 2021年6月23日18:00:35$
  */
 public class RsaUtils {
+    public static final String RSA="RSA";
+    public static final int INITLEN=1024;
     public static String data="hello world";
 
     public static void main(String[] args) throws Exception {
@@ -40,25 +42,25 @@ public class RsaUtils {
 
     //生成密钥对
     public static KeyPair genKeyPair(int keyLength) throws Exception{
-        KeyPairGenerator keyPairGenerator=KeyPairGenerator.getInstance("RSA");
+        KeyPairGenerator keyPairGenerator=KeyPairGenerator.getInstance(RSA);
         if(keyLength>0) {
             keyPairGenerator.initialize(keyLength);
         }else{
-            keyPairGenerator.initialize(1024);
+            keyPairGenerator.initialize(INITLEN);
         }
         return keyPairGenerator.generateKeyPair();
     }
 
     //公钥加密
     public static byte[] encrypt(byte[] content, PublicKey publicKey) throws Exception{
-        Cipher cipher=Cipher.getInstance("RSA");//java默认"RSA"="RSA/ECB/PKCS1Padding"
+        Cipher cipher=Cipher.getInstance(RSA);//java默认"RSA"="RSA/ECB/PKCS1Padding"
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
         return cipher.doFinal(content);
     }
 
     //私钥解密
     public static byte[] decrypt(byte[] content, PrivateKey privateKey) throws Exception{
-        Cipher cipher=Cipher.getInstance("RSA");
+        Cipher cipher=Cipher.getInstance(RSA);
         cipher.init(Cipher.DECRYPT_MODE, privateKey);
         return cipher.doFinal(content);
     }
